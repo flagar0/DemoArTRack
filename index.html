@@ -114,6 +114,40 @@
         });
       };
       document.body.appendChild(script);
+       
+	 
+	var begin = true;
+	function sendWebsocketData(data) {
+		if(begin)
+			Instancia.SendMessage('EventSystem', 'MovimentaCuboWEB', data);
+
+	}			
+	var jsonWebSocket;
+	var ws = new WebSocket("ws://127.0.0.1:5678/"),messages = document.createElement('ul');
+	ws.onmessage = function (event) {
+		date = new Date(Date.now())
+		document.getElementById("testee").innerHTML = '__________Data= '+event.data;
+		sendWebsocketData(event.data.toString());
+		
+	};	
+	function copiedText(e){
+		  var keynum;
+
+		  if(window.event) { // IE                  
+			keynum = v.keyCode;
+		  } else if(v.which){ // Netscape/Firefox/Opera                 
+			keynum = v.which;
+		  }
+
+		 
+	}
+	var clipText="";	
+	document.addEventListener('keydown', evt => {
+    if (evt.key === 'v' && evt.ctrlKey) {
+        clipboardData = navigator.clipboard.readText().then(
+			clipText => unityInstance.SendMessage('Manager', 'getCopiedTextFromFrontEnd', clipText));
+    }
+});
     </script>
   </body>
 </html>
